@@ -93,7 +93,7 @@ Disassembly of section .plt:
   400bcb:	e9 00 ff ff ff       	jmpq   400ad0 <.plt>
 
 0000000000400bd0 <strtol@plt>:
-  400bd0:	ff 25 a2 24 20 00    	jmpq   *0x2024a2(%rip)        # 603078 <strtol@GLIBC_2.2.5>
+  400bd0:	ff 25 a2 24 20 00    	jmpq   *0x 2024a2(%rip)        # 603078 <strtol@GLIBC_2.2.5>
   400bd6:	68 0f 00 00 00       	pushq  $0xf
   400bdb:	e9 f0 fe ff ff       	jmpq   400ad0 <.plt>
 
@@ -272,7 +272,7 @@ Disassembly of section .text:
   400db9:	83 ff 02             	cmp    $0x2,%edi
   400dbc:	75 3a                	jne    400df8 <main+0x58>
   400dbe:	48 8b 7e 08          	mov    0x8(%rsi),%rdi
-  400dc2:	be b4 22 40 00       	mov    $0x4022b4,%esi
+  400dc2:	be b4 22 40 00       	mov    $0x4 022b4,%esi
   400dc7:	e8 44 fe ff ff       	callq  400c10 <fopen@plt>
   400dcc:	48 89 05 95 29 20 00 	mov    %rax,0x202995(%rip)        # 603768 <infile>
   400dd3:	48 85 c0             	test   %rax,%rax
@@ -331,7 +331,7 @@ Disassembly of section .text:
   400ec6:	e8 29 02 00 00       	callq  4010f4 <phase_6>
   400ecb:	e8 f4 06 00 00       	callq  4015c4 <phase_defused>
   400ed0:	b8 00 00 00 00       	mov    $0x0,%eax
-  400ed5:	5b                   	pop    %rbx
+  400ed5:	5b                   	pop    %rbx 
   400ed6:	c3                   	retq   
   400ed7:	90                   	nop
   400ed8:	90                   	nop
@@ -358,22 +358,22 @@ Disassembly of section .text:
   400efd:	53                   	push   %rbx  # 栈相关
   400efe:	48 83 ec 28          	sub    $0x28,%rsp  # 栈指针-0x28
   400f02:	48 89 e6             	mov    %rsp,%rsi   # 第二个参数%rsi = %rsp
-  400f05:	e8 52 05 00 00       	callq  40145c <read_six_numbers>  # 调用方法
-  400f0a:	83 3c 24 01          	cmpl   $0x1,(%rsp)   # 比较栈指针对应的内存是否为1
+  400f05:	e8 52 05 00 00       	callq  401 45c <read_six_numbers>  # 调用方法 read_six_numbers
+  400f0a:	83 3c 24 01          	cmpl   $0x1,(%rsp)   # 比较栈指针对应的内存(第一个数)是否为1
   400f0e:	74 20                	je     400f30 <phase_2+0x34>  # 是则跳转 400f30
   400f10:	e8 25 05 00 00       	callq  40143a <explode_bomb>  # 否则爆炸
   400f15:	eb 19                	jmp    400f30 <phase_2+0x34>  
-  400f17:	8b 43 fc             	mov    -0x4(%rbx),%eax    # %eax 被赋予%rbx内存的值-4
+  400f17:	8b 43 fc             	mov    -0x4(%rbx),%eax    # %eax = (%rbx - 4)  %eax 是内存地址%rbx的地址的前一个数的值
   400f1a:	01 c0                	add    %eax,%eax  # %eax * 2
   400f1c:	39 03                	cmp    %eax,(%rbx)  # 比较 %eax 的值与 %rbx 内存的s值是否相等
   400f1e:	74 05                	je     400f25 <phase_2+0x29>  # 是则x跳转400f25
   400f20:	e8 15 05 00 00       	callq  40143a <explode_bomb>  # 否则爆炸
   400f25:	48 83 c3 04          	add    $0x4,%rbx  # %rbx + 4
-  400f29:	48 39 eb             	cmp    %rbp,%rbx  # %rbp 与 %rbx 是否相等
+  400f29:	48 39 eb             	cmp    %rbp,%rbx  # %rbp 与 %rbx 是否相等         %rbx 是否到了第七个数的位置
   400f2c:	75 e9                	jne    400f17 <phase_2+0x1b> # 不相等跳转 400f17
   400f2e:	eb 0c                	jmp    400f3c <phase_2+0x40> # 相等跳转 400f3c
-  400f30:	48 8d 5c 24 04       	lea    0x4(%rsp),%rbx        # %rbx = %rsp + 4 
-  400f35:	48 8d 6c 24 18       	lea    0x18(%rsp),%rbp       # %rbp = %rsp + 0x18
+  400f30:	48 8d 5c 24 04       	lea    0x4(%rsp),%rbx        # %rbx = %rsp + 4  第二个数的地址
+  400f35:	48 8d 6c 24 18       	lea    0x18(%rsp),%rbp       # %rbp = %rsp + 0x18  第七个数的地址
   400f3a:	eb db                	jmp    400f17 <phase_2+0x1b> # 跳转至400f17
   400f3c:	48 83 c4 28          	add    $0x28,%rsp
   400f40:	5b                   	pop    %rbx
